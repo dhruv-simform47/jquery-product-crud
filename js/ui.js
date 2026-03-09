@@ -5,19 +5,21 @@ import $ from "https://code.jquery.com/jquery-4.0.0.module.min.js";
 export function toggleProductView() {
   const productForm = $("#productForm");
   if (productForm.css("display") == "none" || productForm.css("display") == "") {
-    $("#btnNewProduct").css("display","none");
-    $("#productList").css("display","none");
-    $("#searchFilter").css("display","none");
-    $("#productForm").css("display","block");
-    $("#btnShowProduct").css("display","block");
+    $("#btnNewProduct").hide();
+    $("#productList").hide();
+    $("#searchFilter").hide()
+    $("#productForm").show();
+    $("#btnShowProduct").show();
   } else {
-    $("#productForm").css("display","none");
-    $("#btnShowProduct").css("display","none");
-    $("#btnNewProduct").css("display","block");
-    $("#productList").css("display","block");
-    $("#searchFilter").css("display","block");
+    $("#productForm").hide();
+    $("#btnShowProduct").hide();
+    $("#btnNewProduct").show();
+    $("#productList").show();
+    $("#searchFilter").show();
   }
 }
+
+
 
 export function previewProductImage(fileInput) {
   const preview = $("#imgView");
