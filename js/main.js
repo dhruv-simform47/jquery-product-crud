@@ -14,22 +14,21 @@ import { debounce } from "./utils.js";
 
 
 $("#btnCancel").click(function(){
-  renderProductList();
+  renderProductList(getProducts());
 });
 
 $("#btnNewProduct").click(function(){
   showProductForm(0);
 });
 
-$("#btnShowProduct").click(function(){renderProductList()});
+$("#btnShowProduct").click(function(){renderProductList(getProducts())});
 
 $(document).ready(function(){
-  renderProductList();
+  renderProductList(getProducts());
 });
 
 //this handle the new product button and edit button
-
-globalThis.showProductForm = function (flag, editid = 0) { 
+globalThis.showProductForm = function (flag, editId = 0) { 
   const productTitle = $("#pTitle");
   const btnSubmit = $("#btnSubmit");
   $("#productForm")[0].reset();
@@ -44,12 +43,12 @@ globalThis.showProductForm = function (flag, editid = 0) {
   } else {
     productTitle.text("Edit Product Form");
     btnSubmit.off().on("click",function () {
-      editProduct(editid);
+      editProduct(editId);
     });
     btnSubmit.removeClass("btn-success");
     btnSubmit.addClass("btn-info");
     btnSubmit.text("Update");
-    populateEditForm(editid);
+    populateEditForm(editId);
   }
 
   toggleProductView();
@@ -63,8 +62,6 @@ globalThis.showProductForm = function (flag, editid = 0) {
 globalThis.deleteProduct = deleteProduct;
 
 //sorting function
-
-
 $("#sortSelect").off().on("change",function () {
   const products = getProducts();
   const sortOption = this.value;
@@ -75,7 +72,7 @@ $("#sortSelect").off().on("change",function () {
 //filter function
 function getFilltered(searchId) {
   if (searchId == "") {
-    renderProductList();
+    renderProductList(getProducts());
   } else {
     const products = getProducts();
     const productList = products.filter((prod) => searchId == prod.id);
@@ -89,8 +86,6 @@ function getFilltered(searchId) {
 }
 
 const schedular = debounce(getFilltered, 1000);
-
-
 
 $("#searchFilter").keyup(function (e) {
   schedular(e.target.value);

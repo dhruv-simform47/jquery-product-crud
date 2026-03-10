@@ -31,3 +31,10 @@ export function getIndex(id, parray) {
     }
     return index;
 }
+
+export function getProductById(id)
+{
+    const products = getProducts();
+    let index = getIndex(id, products);
+    return products[index];
+}
