@@ -23,10 +23,10 @@ export function toggleProductView() {
 
 export function previewProductImage(fileInput) {
   const preview = $("#imgView");
-  const file = fileInput.files[0];
+  const file = fileInput[0].files[0];
   const reader = new FileReader();
 
-  $(reader).on("load" ,function(){
+  $(reader).off().on("load" ,function(){
     preview.attr("src",reader.result);
 
     $(".preview").css("display","block");
@@ -47,7 +47,7 @@ export function populateEditForm(editid) {
   $("#preview").css("display","block");
   console.log("inside populate",products[index].image);
   $("#imgView").prop("src",products[index].image);
-  // document.getElementById("imgView").src=products[index].image;
+ 
 
 }
 

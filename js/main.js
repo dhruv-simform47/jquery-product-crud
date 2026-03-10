@@ -29,51 +29,43 @@ $(document).ready(function(){
 
 //this handle the new product button and edit button
 
-window.showProductForm = function (flag, editid = 0) {
-  const productTitle = document.getElementById("pTitle");
-  const btnSubmit = document.getElementById("btnSubmit");
-  document.getElementById("productForm").reset();
+globalThis.showProductForm = function (flag, editid = 0) { 
+  const productTitle = $("#pTitle");
+  const btnSubmit = $("#btnSubmit");
+  $("#productForm")[0].reset();
 
   if (flag === 0) {
-    productTitle.innerText = "Add Product Form";
-    btnSubmit.onclick = function () {
-      addProduct();
-    };
-    btnSubmit.classList.remove("btn-secondary");
-    btnSubmit.classList.add("btn-success");
-    btnSubmit.innerText = "Add";
-    document.querySelector(".preview").style.display = "none";
+    productTitle.text ("Add Product Form");
+    btnSubmit.off().on("click",addProduct);
+    btnSubmit.removeClass("btn-secondary");
+    btnSubmit.addClass("btn-success");
+    btnSubmit.text("Add");
+    $(".preview").css("display","none");
   } else {
-    productTitle.innerText = "Edit Product Form";
-    btnSubmit.onclick = function () {
+    productTitle.text("Edit Product Form");
+    btnSubmit.off().on("click",function () {
       editProduct(editid);
-    };
-    btnSubmit.classList.remove("btn-success");
-    btnSubmit.classList.add("btn-info");
-    btnSubmit.innerText = "Update";
+    });
+    btnSubmit.removeClass("btn-success");
+    btnSubmit.addClass("btn-info");
+    btnSubmit.text("Update");
     populateEditForm(editid);
   }
 
   toggleProductView();
 
-  const fileInput = document.getElementById("prodImage");
-  fileInput.removeEventListener("change", () => {
-    
-    previewProductImage(fileInput);
-  });
-  fileInput.addEventListener("change", () => {
-    
+  const fileInput = $("#prodImage");
+  fileInput.off().on("change",function(){
     previewProductImage(fileInput);
   });
 };
 
-window.deleteProduct = deleteProduct;
+globalThis.deleteProduct = deleteProduct;
 
 //sorting function
 
-const sortSelect = document.getElementById("sortSelect");
 
-sortSelect.addEventListener("change", function () {
+$("#sortSelect").off().on("change",function () {
   const products = getProducts();
   const sortOption = this.value;
   const sortedProducts = sortProducts(products, sortOption);
@@ -91,15 +83,15 @@ function getFilltered(searchId) {
     if (productList.length > 0) {
       renderProductList(productList);
     } else {
-      window.alert("No data for id:  " + searchId);
+      globalThis.alert("No data for id:  " + searchId);
     }
   }
 }
 
 const schedular = debounce(getFilltered, 1000);
 
-const searchFilter = document.getElementById("searchFilter");
 
-searchFilter.addEventListener("keyup", function (e) {
+
+$("#searchFilter").keyup(function (e) {
   schedular(e.target.value);
 });
